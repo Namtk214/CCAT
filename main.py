@@ -10,7 +10,7 @@ import random
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import sklearn
+from sklearn import metrics
 import matplotlib.pyplot as plt
 from collections import defaultdict
 from dataset import Dataset, TrainDataset, AdapTestDataset
@@ -55,7 +55,29 @@ def pairwise(stu_theta,theta_star):
                     sum+=1
         pair.append(sum/(len(stu_theta)*(len(stu_theta)-1)))  
     return pair    
-
+#Acc score
+def ACC_score(stu_theta,test_select,gamma,beta,test_label):
+    acc = []
+    for t in range(20):
+        acc_sum = 0
+        sum = 0
+        for stu in range(len(stu_theta)):
+            for q in test_select[stu]:
+                acc_sum+=(round(IRT(stu_theta[stu][t],gamma[q],beta[q]))==test_label[stu][q]).item()
+                sum+=1
+        acc.append(acc_sum/sum)
+    return acc
+def AUC_score(stu_theta,test_select,gamma,beta,test_label):
+    auc = []
+    for t in range(20):
+        pred = []
+        true = []
+        for stu in range(len(stu_theta)):
+            for q in test_select[stu]:
+                pred.append(IRT(stu_theta[stu][t],gamma[q],beta[q]))
+                true.append(test_label[stu][q].item())
+        auc.append(metrics.roc_auc_score(true,pred))
+    return auc
 #Select question and estimation 
 def Rank(params,device):
     #data preparation
@@ -169,21 +191,46 @@ def Rank(params,device):
         
         train_theta_star = train_theta_star.detach().cpu().numpy().reshape(-1)
     
-    if params.irt_method == 'mcmc':
-        from selection_strategy import MCMC_Selection as Selection_method
-        selection = Selection_method(train_data,test_data,concept_map,train_label,test_label,gamma,beta,params)
-    else:
-        from selection_strategy import GD_Selection as Selection_method
-        selection = Selection_method(train_data,test_data,concept_map,train_label,test_label,irt_model,params)
-    selected_questions, stu_theta = selection.get_question()
-    iner_rank = Rank_score(train_label,test_label,selected_questions,theta_star,train_theta_star,ga,device)
-    
-    print('intra Ranking Consistency:',iner_rank)
-    rank_result = get_rank_result(train_label,test_label,selected_questions,ga,device).sum(-1)
-    inter_rank = pairwise(stu_theta,theta_star)
-    inter_rank_c = pairwise(rank_result,theta_star)
-    print('inter Ranking Consistency estimated by IRT:',inter_rank)
-    print('inter Ranking Consistency estimated by CCAT:',inter_rank_c)  
+    if params.metric_method == 'Ranking':
+        if params.irt_method == 'mcmc':
+            from selection_strategy import MCMC_Selection as Selection_method
+            selection = Selection_method(train_data,test_data,concept_map,train_label,test_label,gamma,beta,params)
+        else:
+            from selection_strategy import GD_Selection as Selection_method
+            selection = Selection_method(train_data,test_data,concept_map,train_label,test_label,irt_model,params)
+        selected_questions, stu_theta = selection.get_question()
+        iner_rank = Rank_score(train_label,test_label,selected_questions,theta_star,train_theta_star,ga,device)
+        
+        print('intra Ranking Consistency:',iner_rank)
+        rank_result = get_rank_result(train_label,test_label,selected_questions,ga,device).sum(-1)
+        inter_rank = pairwise(stu_theta,theta_star)
+        inter_rank_c = pairwise(rank_result,theta_star)
+        print('inter Ranking Consistency estimated by IRT:',inter_rank)
+        print('inter Ranking Consistency estimated by CCAT:',inter_rank_c)  
+    if params.metric_method == 'ACC/AUC':
+        test_select = []
+        test_select_label = cp.deepcopy(test_label)
+        np.random.seed(params.seed)
+        for stu in range(test_data.num_students):
+            select = torch.where(test_label[stu]>=0)[0].cpu().numpy()
+            np.random.shuffle(select)
+            selects = select[int(0.9*len(select)):]
+            test_select_label[stu][selects] = -1
+            test_select.append(set(selects))
+        if params.irt_method == 'mcmc':
+            from selection_strategy import MCMC_Selection as Selection_method
+            selection = Selection_method(train_data,test_data,concept_map,train_label,test_select_label,gamma,beta,params)
+        else:
+            from selection_strategy import GD_Selection as Selection_method
+            selection = Selection_method(train_data,test_data,concept_map,train_label,test_select_label,irt_model,params)
+        selected_questions, stu_theta = selection.get_question()
+        if params.irt_method == 'gd':
+            gamma = ga.detach().cpu().numpy()
+            beta = be.detach().cpu().numpy()
+        ACC = ACC_score(stu_theta,test_select,gamma,beta,test_label)
+        print('ACC:',ACC)
+        AUC = AUC_score(stu_theta,test_select,gamma,beta,test_label)
+        print('AUC:',AUC)
     
 if __name__ == '__main__':
     device = torch.device("cuda") if params.device=='cuda' else torch.device("cuda")
