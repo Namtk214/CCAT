@@ -145,6 +145,12 @@ Our model achieves the following performance on :
 | [<u>BECAT</u>](https://nips.cc/virtual/2023/poster/70224)    | 0.8045     | 0.8676     | 0.8948     | 0.9104     |
 | CCAT                                                         | **0.8476** | **0.8839** | **0.9013** | 0.9116     |
 
+### ACC/AUC
+
+![](C:\Users\Administrator\Desktop\Supplementary_material\acc_auc.png)
+
+
+
 ## Contributing
 
 >📋  We use the MIT License.
