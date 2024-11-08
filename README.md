@@ -147,7 +147,7 @@ Our model achieves the following performance on :
 
 ### ACC/AUC
 
-![](C:\Users\Administrator\Desktop\Supplementary_material\acc_auc.png)
+![](acc_auc.png)
 
 
 
