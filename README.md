@@ -1,6 +1,13 @@
 # Collaborative Computerized Adaptive Testing for Ranking
 
+TRƯỚC HẾT HÃY TẢI BỘ DỮ LIỆU NIPS2020 VỀ MÁY , SAU ĐÓ NHÉT THƯ MỤC IMAGES(CỦA BỘ DỮ LIỆU NIPS2020), KHÔNG SỬ DỤNG bộ junji  VÀO TRONG THƯ MỤC STATIC CỦA REPO. SAU ĐÓ LÀM NHƯ CÁC BƯỚC DƯỚI
+LƯU Ý LÀ REQUIREMENT.TXT LỖI RẤT NHIỀU NÊN CỨ KỆ, KIỂU GÌ CŨNG CHẠY ĐƯỢC CÁC BƯỚC, CÓ THIẾU GÌ THÌ TẢI THÊM
 
+
+SAU KHI LÀM HẾT CÁC BƯỚC PHÍA DƯỚI, CHẠY APP.PY LÀ ĐƯỢC
+
+ĐƯỜNG DẪN BỘ DATASETS
+https://eedi.com/projects/neurips-education-challenge
 
 ## Requirements
 
@@ -14,12 +21,7 @@ pip install -r requirements.txt
 
 **！！！The preprocessing data is provided in Supplementary_material, which means you can skip this step.**
 
-To get the dataset used in experiments, you can use **[Edudata](https://github.com/bigdata-ustc/EduData)** package.
 
-```train
-edudata download NIPS-2020
-edudata download junyi
-```
 
 Deconstruct the downloaded data as follows:
 
@@ -30,9 +32,6 @@ data/
 │   ├── train_task_3_4.csv
 │   └── meta_data.csv
 │
-├── JUNYI/
-│   ├── junyi_ProblemLog_original.csv
-│   └── junyi_Exercise_table.csv
 │
 └── dataset.py
 │
@@ -48,7 +47,7 @@ To preprocessing the dataset,run:
 ```train
 cd data
 python prepare_data.py --data_name='NIPS2020'
-python prepare_data.py --data_name='JUNYI'
+
 ```
 
 >📋  **prepare_data.py** will delete students with less than 50 answering records, as well as delete questions with less than 50 answering times. The dataset will be divided into a training set (collaborative students) and a testing set (tested students) in a 4:1 ratio. The outputs of prepare_data.py are **train_triples.csv**, **test_triples.csv**, **triples.csv**, **metadata.json**, **concept_map.json**.
@@ -83,14 +82,6 @@ data/
 │   ├── train_triples.csv
 │   └── triples.csv
 │
-├── JUNYI/
-│	├── alpha.npy
-│   ├── beta.npy
-│   ├── concept_map.json
-│   ├── metadata.json
-│   ├── test_triples.csv
-│   ├── train_triples.csv
-│   └── triples.csv
 ```
 
 To preprocessing the dataset,run:
