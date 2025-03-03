@@ -174,8 +174,8 @@ def question():
 
     # Hàm chọn câu hỏi kết hợp nhiều tiêu chí: Fisher Information, diversity bonus và help bonus
     def select_next_question(theta, gamma, beta, unanswered):
-        diversity_weight = 0.5
-        help_bonus_weight = 0.3
+        diversity_weight = 0.9  # Trọng số cho diversity bonus
+        help_bonus_weight = 0.0
 
         # Nếu chưa có câu nào được trả lời, chọn câu có độ khó (beta) gần mức trung bình
         answered_qids = session.get("answered_questions", [])
