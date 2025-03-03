@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết Quả CCAT Demo</title>
+    <!-- Thêm Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Thêm Animate.css -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+</head>
+<body class="bg-light text-center">
+    <div class="container">
+        <h1 class="my-5 animate__animated animate__fadeInDown">Kết Quả Bài Thi</h1>
+        <p class="lead animate__animated animate__fadeInUp">Số câu đúng: {{ score }} / {{ total }}</p>
+        <p class="lead animate__animated animate__fadeInUp">Năng lực cuối cùng (theta): {{ final_theta }}</p>
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg mt-4 animate__animated animate__zoomIn">Quay lại trang chủ</a>
+    </div>
+    <!-- Thêm jQuery và Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
