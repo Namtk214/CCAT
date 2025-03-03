@@ -1,6 +1,9 @@
 # Collaborative Computerized Adaptive Testing for Ranking
 
+TRƯỚC HẾT HÃY TẢI BỘ DỮ LIỆU NIPS2020 VỀ MÁY , SAU ĐÓ NHÉT THƯ MỤC IMAGES(CỦA BỘ DỮ LIỆU NIPS2020)  VÀO TRONG THƯ MỤC STATIC CỦA REPO. SAU ĐÓ LÀM NHƯ CÁC BƯỚC DƯỚI
+LƯU Ý LÀ REQUIREMENT.TXT LỖI RẤT NHIỀU NÊN CỨ KỆ, KIỂU GÌ CŨNG CHẠY ĐƯỢC CÁC BƯỚC, CÓ THIẾU GÌ THÌ TẢI THÊM
 
+SAU KHI LÀM HẾT CÁC BƯỚC PHÍA DƯỚI, CHẠY APP.PY LÀ ĐƯỢC
 
 ## Requirements
 
