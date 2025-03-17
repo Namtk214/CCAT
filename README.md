@@ -1,13 +1,13 @@
 # Collaborative Computerized Adaptive Testing for Ranking
 
-TRƯỚC HẾT HÃY TẢI BỘ DỮ LIỆU NIPS2020 VỀ MÁY , SAU ĐÓ NHÉT THƯ MỤC IMAGES(CỦA BỘ DỮ LIỆU NIPS2020), KHÔNG SỬ DỤNG bộ junji  VÀO TRONG THƯ MỤC STATIC CỦA REPO. SAU ĐÓ LÀM NHƯ CÁC BƯỚC DƯỚI
-LƯU Ý LÀ REQUIREMENT.TXT LỖI RẤT NHIỀU NÊN CỨ KỆ, KIỂU GÌ CŨNG CHẠY ĐƯỢC CÁC BƯỚC, CÓ THIẾU GÌ THÌ TẢI THÊM
+First, download the NIPS2020 dataset to your machine. Then, move the images folder (from the NIPS2020 dataset) into the static folder of the repository, without using the junji set.
 
+After that, follow the steps below.
+Once you have completed all the steps below, simply run app.py.
 
-SAU KHI LÀM HẾT CÁC BƯỚC PHÍA DƯỚI, CHẠY APP.PY LÀ ĐƯỢC
-
-ĐƯỜNG DẪN BỘ DATASETS
+Dataset link:
 https://eedi.com/projects/neurips-education-challenge
+
 
 ## Requirements
 
@@ -139,6 +139,11 @@ Our model achieves the following performance on :
 ### ACC/AUC
 
 ![](acc_auc.png)
+
+
+### Demo UI GEMINI
+
+![DemoUI](https://github.com/user-attachments/assets/b7da8524-ab8e-45e1-84a2-b733045284f2)
 
 
 
